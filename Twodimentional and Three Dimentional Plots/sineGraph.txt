@@ -1,0 +1,16 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.dates as mdates
+
+
+t=np.arange(0.0,4.0, 4/500)
+
+s=np.exp(t)*np.sin(4*np.pi*t)
+
+plt.plot(t,s, label='dampled sine wave', color='g')
+
+
+plt.show()
+
+
+

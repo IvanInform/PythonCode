@@ -1,0 +1,51 @@
+Використовуючи мову програмування Python і бібліотеку numpy розробити програму для знаходження коренів СЛАР довільного розміру. Користувач вводить матрицю системи рівнянь і елементи вектору-стовпцю. Програма повинна розв'язати задачу двома способами:
+ 1) функція solve (numpy.linalg)
+import numpy as np
+import re
+#import math
+lst=[]
+vec=[]
+column=[]
+variable=0
+try:
+    variable=int(input("Enter number of equations. Equation must be square"))
+except Exception as ex:
+    print(ex)
+    
+for i in range(variable):
+   
+    equation=input("Enter equation string: ")
+   
+    c=(re.findall('[-+]?[0-9]+', equation)
+       )
+    d=[int(x) for x in c]
+    lst.append(d[0:-1])
+    column.append(d[-1])
+a=[]
+try:
+    a=np.array(lst)
+except Exception as ex:
+        print(ex)
+print (a)
+b=[]
+try:
+    b=np.array(column)
+except Exception as ex:
+        print(ex)
+print (b)
+result=[]
+try:
+    result=np.linalg.solve(a,b)
+except Exception as ex:
+        print(ex)
+
+count=1
+for g in result:
+    print("var{0}={1}".format(count,round(g,2)))
+    count=count+1
+В данной программе показано, как решить линейные уравнения с помощью библиотеки языка python numpy. В директире import подключается модуль Numpy. Далее подключается модуль re для регулярных выражений. Далее, создаются три списка lst, vec и column и переменная variable, которая будет хранить количество выражений. Система уравнений должна быть квадратной. 
+В блоке try, except идет проверка ввода пользователя на ввод цифровой информации. В следующем блоке пользователю предоставляется право ввести уравнения, которые сразу анализируются с помощью регулярных выражений на знак(или его отсутствие) и цифры, которые заносятся в матрицу. Выражение d=[int(x) for x in c] преобразует тип строка в тип целочисленное число. 
+При заполнении матриц, последний столбец (он содержит свободные члены) отдельно идет в новый список. 
+В итоге, с помощью функции из библиотеки numpy  numpy.linalg.solve решается уравнение и результат присваивается кортежу result. Далее данные выводятся в цикле for на экран. 
+
+

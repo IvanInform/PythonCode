@@ -1,0 +1,61 @@
+Використовуючи мову програмування Python і бібліотеку numpy розробити програму для знаходження коренів СЛАР довільного розміру. Користувач вводить матрицю системи рівнянь і елементи вектору-стовпцю. Програма повинна розв'язати задачу двома способами:
+2) методом (для знаходження визначників є функція det простору numpy.linalg).
+import numpy as np
+from numpy import linalg
+from copy import deepcopy
+import re
+
+lst=[]
+column=[]
+
+variable=0
+try:
+    variable=int(input("Enter number of equations. Equation must be square"))
+except Exception as ex:
+    print(ex)
+try:    
+    for i in range(variable):
+       
+        equation=input("Enter equation string: ")
+       
+        c=(re.findall('[-+]?[0-9]+', equation)
+           )
+        if len(c)<variable:
+            raise Exception("Wrong entry")
+        d=[int(x) for x in c]
+        lst.append(d[0:-1]) 
+        column.append(d[-1])
+except Exception as ex:
+    print(ex)
+
+A=lst
+print(A)
+B=column
+print(B)
+C=deepcopy(lst)
+
+print(C)
+X=[]
+try:
+    for i in range(0,len(B)):
+        for j in range(0,len(B)):
+            C[j][i]=B[j]
+           
+            if i>0:
+                C[j][i-1]=A[j][i-1]
+               
+        X.append(round(linalg.det(C)/linalg.det(A),1))
+     
+except Exception as ex:
+    print(ex)
+print("Results are: ")
+count=1
+for i in X:
+    print("unknown{0}= {1}".format(count, i))
+    count=count+1
+В данном задании  система линейных уравнений решается с помощью метода Крамера. Данный метод основан на нахождении определителей матриц. 
+В программе используются модули numpy, deepcopy и re. Модуль deepcopy нужен для того, чтобы сделать копию системы уравнений, т.к. при присваивании объекты не копируются, а создается новая ссылка. 
+Так же, как и в первом задании, создается интерфейс для работы с пользователем программы, где пользователь вносит данные уравнений, которые хранятся в списках lst, column.
+Далее,  результаты ввода присваиваются двумерным спискам А, С и B.
+Во вложенном цикле for происходит подмена столбца вещественных коэффициентов столбцом свободных членов отдельно для каждого не известной переменной. А в первом цикле происходит деление определителей для нахождения неизвестных переменных. Определители находятся с помощью функции linalg.det. 
+В конце программы результаты, которые сохранились в список X выводятся через цикл for  на экран.

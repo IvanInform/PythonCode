@@ -1,0 +1,24 @@
+Exercise 4. Solving ordinary differential equations
+Solution:
+1.	import numpy as np
+2.	
+3.	from scipy.integrate import odeint
+4.	import matplotlib.pyplot as plt
+5.	import pylab
+6.	pylab.show()
+7.	def f(y,t):
+8.	    return -np.exp(-t)*(10*np.sin(10*t)+np.cos(10*t))
+9.	
+10.	
+11.	y0 = 1             
+12.	a = 0
+13.	b = 10
+14.	
+15.	t = np.arange(a, b, 0.01)                         
+16.	                          
+17.	y = odeint(f, y0, t) 
+18.	
+19.	import pylab         
+20.	pylab.plot(t, y)
+21.	pylab.xlabel('t'); pylab.ylabel('y(t)')
+22.	pylab.show()

@@ -1,0 +1,27 @@
+Exercise 5. Root finding
+Solution:
+
+from scipy.optimize import bisect
+def f(x):
+    return 2-x**2
+x = bisect(f, 1.4, 1.5, xtol=1e-6)
+print("The root x is approximately x=%14.12g,\nthe error is less than 1e-6." %(x))
+print("The exact error is %g." % (sqrt(2)-x))
+The root x is approximately x= 1.41421432495,
+the error is less than 1e-6.
+The exact error is -7.62578e-07.
+2. I’ve chosen values of between 1.4 to 1.5 because at point 1.4 function returns positive y and at point at 1.5 function of x returns negative number. We have to find root between these two numbers. 
+3. If we compute math.sqrt(2) with math function from library math, we receive 1.4142135623730951 answer. With smaller xtol (1e-6), the result is several times more accurate, with the error about 3e-7.
+4. 
+from scipy.optimize import fsolve
+from math import *
+def f(x):
+    return 2-x**2
+x=fsolve(f, 1.4)
+print("The root x is approximately x=%14.12g,\nthe error is less than 1e-6." %(x))
+print("The exact error is %g." % (x-sqrt(2)))
+The root x is approximately x= 1.41421356237,
+the error is less than 1e-6.
+The exact error is 0.
+The result of solving for root with the help of scipy.optimize.fsolve function is much more accurate than the result from bisect function
+0 to -7.62578e-07.

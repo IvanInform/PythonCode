@@ -1,0 +1,53 @@
+Exercise 3. Numerical integration
+1.	Using scipy’s quad function, write a program that solves the following integral numerically: 
+import scipy.integrate as integrate
+from scipy.integrate import quad
+from math import cos, exp, pi
+
+def f(x):
+    return cos(2*pi*x)
+res,err=quad(f, 0,1)
+print("The numerical result is {:f} (+-{:g})"
+    .format(res, err))
+
+Result will be:
+The numerical result is 0.000000 (+-7.11699e-15)
+2.	Find the analytical integral and compare it with the numerical solution
+Derivative of f(x)cos2pixdx=sinx+C
+Use integration by substitution: let u=2pi x, du=2pidx, then dx=1/2pi*du
+Then we rewrite cos2pidx to (cos(u)/2pi)*du
+Then  using constant factor rule cf(x)dx=c |f(x) dx we transform to 1/2pi |cosu du
+By substituting we receive sin u/2pi, which is equal to sin2pi/2pi
+Result: (-3.8473413874435795e-16)- 0.0 = -3.8473413874435795e-16
+And the numerical solution is 0.000000 (+-7.11699e-15)
+Comparing results we can say that analytical solution is not feasible, because the area under the curve can’t be negative. 
+3.	Why is it important to have an estimate of the accuracy (or the error) of the numerical integral?
+The numerical solution to integral gives weighted sum of integration points. The integration points and weights depend on the specific method used and the accuracy required from the approximation. Each method gives different results of errors. Given the yielded errors one can choose the superior method to compute integral on the basis of smallest error.
+4.	It is good practice to plot the integrand function to check whether it is “well behaved” before you attempt to integrate. Write a function with name plotquad which takes the same arguments as the quad command (i.e.  ff ,  aa  and bb ) and which (i) creates a plot of the integrand  f(x)f(x)  and (ii) computes the integral numerically using the quad function. The return values should be as for the quad function:
+import numpy as np
+from scipy import integrate
+import matplotlib.pyplot as plt
+import pylab
+pylab.show()
+
+def f(x):
+    if (np.abs(x)<1e-10):
+        res = x
+    else:
+        res=np.cos(2*np.pi*x)
+    return res
+
+X=np.arange(0, 1, 0.001)
+
+
+
+def F(x):
+    try:
+        return [integrate.quad(f, 0, y) for y in x]
+    except TypeError:
+        return integrate.quad(f, 0, x)
+
+plt.plot(X, [F(x)[0] for x in X])
+plt.show()
+
+

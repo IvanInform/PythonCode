@@ -1,0 +1,22 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from numpy import sin, cos, pi
+from skimage import measure
+
+
+def fun(x, y, z):
+    a=(1-x**2)+(1-y**2)-np.sqrt((1-x**2)**2+(1-y**2)**2)
+    b=(1-z**2)
+    surf_eq=a+b-np.sqrt(a**2+b**2)
+    return surf_eq
+
+x, y, z = np.mgrid[-4:4:30j, -4:4:30j, -4:4:30j]
+vol = fun(x, y, z)
+verts, faces = measure.marching_cubes_classic(vol, 0, spacing=(0.1, 0.1, 0.1))
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_trisurf(verts[:, 0], verts[:,1], faces, verts[:, 2],
+               cmap='seismic', lw=1)
+plt.show()
